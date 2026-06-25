@@ -2,24 +2,18 @@ using UnityEngine;
 
 public class DogCatchDetector : MonoBehaviour
 {
-    [SerializeField] private string playerTag = "Player";
-
     private DogController dogController;
 
     private void Awake()
     {
-        dogController = GetComponent<DogController>();
+        dogController = GetComponentInParent<DogController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Entered: " + other.name);
+        if (!other.CompareTag("Player")) return;
 
-        if (!other.CompareTag(playerTag))
-            return;
-
-        Debug.Log("Dog Caught!");
-
+        Debug.Log("Dog caught!");
         dogController.StopDog();
     }
 }

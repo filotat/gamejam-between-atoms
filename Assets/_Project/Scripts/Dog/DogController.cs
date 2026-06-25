@@ -5,7 +5,6 @@ public class DogController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float jumpForce = 8f;
-    [SerializeField] private float jumpCooldown = 0.4f;
 
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheck;
@@ -23,7 +22,7 @@ public class DogController : MonoBehaviour
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool isCaught;
-    private float lastJumpTime;
+    private bool hasJumpedOverObstacle;
 
     private void Awake()
     {
@@ -36,18 +35,24 @@ public class DogController : MonoBehaviour
     }
 
     private void FixedUpdate()
+{
+    if (isCaught) return;
+
+    MoveForward();
+
+    bool obstacleDetected = CheckWall() || CheckGap();
+
+    if (obstacleDetected && !hasJumpedOverObstacle)
     {
-        if (isCaught) return;
-
-        MoveForward();
-
-        bool shouldJump = CheckWall() || CheckGap();
-
-        if (shouldJump && Time.time >= lastJumpTime + jumpCooldown)
-        {
-            Jump();
-        }
+        Jump();
+        hasJumpedOverObstacle = true;
     }
+
+    if (!obstacleDetected && isGrounded)
+    {
+        hasJumpedOverObstacle = false;
+    }
+}
 
     private void MoveForward()
     {
@@ -87,13 +92,12 @@ public class DogController : MonoBehaviour
         return hit.collider == null;
     }
 
-    private void Jump()
-    {
-        if (!isGrounded) return;
+   private void Jump()
+{
+    if (!isGrounded) return;
 
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-        lastJumpTime = Time.time;
-    }
+    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+}
 
     public void StopDog()
     {
