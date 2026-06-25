@@ -5,6 +5,7 @@ public class DogController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 4f;
     [SerializeField] private float jumpForce = 8f;
+    [SerializeField] private float jumpCooldown = 0.4f;
 
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheck;
@@ -22,6 +23,7 @@ public class DogController : MonoBehaviour
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool isCaught;
+    private float lastJumpTime;
 
     private void Awake()
     {
@@ -39,7 +41,9 @@ public class DogController : MonoBehaviour
 
         MoveForward();
 
-        if (CheckWall() || CheckGap())
+        bool shouldJump = CheckWall() || CheckGap();
+
+        if (shouldJump && Time.time >= lastJumpTime + jumpCooldown)
         {
             Jump();
         }
@@ -88,6 +92,7 @@ public class DogController : MonoBehaviour
         if (!isGrounded) return;
 
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        lastJumpTime = Time.time;
     }
 
     public void StopDog()
