@@ -24,8 +24,8 @@ public class gasCloud : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             playerController = collision.GetComponent<PlayerController>();
-            originalSpeed = playerController.moveSpeed;
-            playerController.moveSpeed = originalSpeed - ((originalSpeed / 100) * speedReduction);
+            originalSpeed = playerController.runSpeed;
+            playerController.runSpeed = originalSpeed - ((originalSpeed / 100) * speedReduction);
         }
     }
 
@@ -33,7 +33,7 @@ public class gasCloud : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            playerController.moveSpeed = originalSpeed;
+            playerController.runSpeed = originalSpeed;
         }
     }
 }
