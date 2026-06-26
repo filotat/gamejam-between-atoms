@@ -1,6 +1,6 @@
 using UnityEngine;
 using FMODUnity;
-
+using FMOD.Studio;
 public class SimpleAudioController : MonoBehaviour
 {
     [SerializeField] private EventReference soundEvent;
@@ -43,7 +43,7 @@ public class SimpleAudioController : MonoBehaviour
     {
         if (instance.isValid())
         {
-            instance.stop(FMOD.Studio.STOP_MODE.ALLOW_FADEOUT);
+            instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             instance.release();
         }
     }
