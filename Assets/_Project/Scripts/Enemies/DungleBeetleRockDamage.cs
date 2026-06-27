@@ -1,0 +1,13 @@
+using UnityEngine;
+
+public class DungBeetleRockDamage : MonoBehaviour
+{
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+
+        if (player == null) return;
+
+        player.Die();
+    }
+}
