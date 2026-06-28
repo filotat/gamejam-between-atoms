@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 1054173287978658504}
   - component: {fileID: 8775324833396407809}
   - component: {fileID: 2864294768621163205}
-  - component: {fileID: 7142243447594982844}
+  - component: {fileID: 6816972912826788413}
   m_Layer: 8
   m_Name: Dog
   m_TagString: Untagged
@@ -458,7 +458,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
---- !u!95 &7142243447594982844
+--- !u!95 &6816972912826788413
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
